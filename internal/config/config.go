@@ -1,13 +1,14 @@
 package config
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 )
 
 type Config struct {
 	Username string            `json:"username"`
-	Remote   Remote            `json:"remote"`
+	Remotes  map[string]Remote `json:"remotes"`
 	Branches map[string]Branch `json:"branches"`
 }
 
@@ -16,10 +17,29 @@ type Remote struct {
 }
 
 type Branch struct {
+	Active bool `json:"active"`
 }
 
-func LoadMainConfigFile(basepath string) *Config {
-	return &Config{}
+func LoadMainConfigFile(basepath string) (*Config, error) {
+	path := GetMainConfigFilePath(basepath)
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	c, err := mapConfig(content)
+	if err != nil {
+		return nil, err
+	}
+	return c, nil
+}
+
+func mapConfig(content []byte) (*Config, error) {
+	var res Config
+	err := json.Unmarshal(content, &res)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 func GetMainConfigFilePath(basepath string) string {
