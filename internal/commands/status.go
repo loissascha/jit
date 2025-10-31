@@ -2,11 +2,11 @@ package commands
 
 import (
 	"fmt"
-	"jit/internal/status"
+	"jit/internal/config"
 )
 
 func StatusCommand() {
-	if !status.IsJitProject(".") {
+	if !config.IsJitProject(".") {
 		fmt.Println("Not a jit project. Use jit init.")
 		return
 	}
