@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"jit/internal/commands"
 )
 
 func main() {
@@ -11,9 +11,8 @@ func main() {
 	args := flag.Args()
 
 	for _, a := range args {
-		fmt.Println(a)
 		if a == "status" {
-			fmt.Println("Status command")
+			commands.StatusCommand()
 		}
 	}
 }
