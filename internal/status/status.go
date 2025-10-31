@@ -6,7 +6,7 @@ import (
 )
 
 func IsJitProject(path string) bool {
-	configPath := config.GetMainConfigFile(path)
+	configPath := config.GetMainConfigFilePath(path)
 	_, err := os.Stat(configPath)
 	if os.IsNotExist(err) {
 		return false
