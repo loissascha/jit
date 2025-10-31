@@ -18,7 +18,7 @@ func main() {
 		case "status":
 			commands.StatusCommand()
 		case "init":
-			fmt.Println("init")
+			commands.InitCommand()
 		}
 	}
 }
