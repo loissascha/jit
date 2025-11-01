@@ -14,7 +14,7 @@ func InitCommand() {
 	var username string
 
 	fmt.Print("Username: ")
-	fmt.Scan(&username)
+	fmt.Scanln(&username)
 	fmt.Println("")
 
 	basicConfig := config.NewConfig()
