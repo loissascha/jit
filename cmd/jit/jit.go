@@ -19,6 +19,8 @@ func main() {
 			commands.StatusCommand()
 		case "init":
 			commands.InitCommand()
+		case "add":
+			commands.AddCommand()
 		}
 	}
 }
