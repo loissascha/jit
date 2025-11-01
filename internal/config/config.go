@@ -66,8 +66,12 @@ func mapConfig(content []byte) (*Config, error) {
 	return &res, nil
 }
 
+func GetConfigDirPath(basepath string) string {
+	return filepath.Join(basepath, ".jit/")
+}
+
 func GetMainConfigFilePath(basepath string) string {
-	return filepath.Join(basepath, ".jit/config")
+	return filepath.Join(GetConfigDirPath(basepath), "config")
 }
 
 func IsJitProject(path string) bool {
