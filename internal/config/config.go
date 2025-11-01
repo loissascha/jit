@@ -20,6 +20,14 @@ type Branch struct {
 	Active bool `json:"active"`
 }
 
+func NewConfig() *Config {
+	return &Config{
+		Username: "",
+		Remotes:  map[string]Remote{},
+		Branches: map[string]Branch{"main": {Active: true}},
+	}
+}
+
 func LoadMainConfigFile(basepath string) (*Config, error) {
 	path := GetMainConfigFilePath(basepath)
 	content, err := os.ReadFile(path)
@@ -31,6 +39,22 @@ func LoadMainConfigFile(basepath string) (*Config, error) {
 		return nil, err
 	}
 	return c, nil
+}
+
+func WriteConfigFile(basepath string, config *Config) error {
+	path := GetMainConfigFilePath(basepath)
+
+	jsonData, err := json.MarshalIndent(config, "", " ")
+	if err != nil {
+		return err
+	}
+
+	err = os.WriteFile(path, jsonData, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func mapConfig(content []byte) (*Config, error) {
