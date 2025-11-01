@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"jit/internal/branches"
 	"jit/internal/config"
+	"os"
 )
 
 func StatusCommand() {
@@ -32,5 +33,14 @@ func StatusCommand() {
 
 	fmt.Println("Active Branch:", activeBranch)
 
-	branches.GetBranch(".", activeBranch)
+	b, err := branches.GetBranch(".", activeBranch)
+	if err != nil {
+		if os.IsNotExist(err) {
+			fmt.Println("all files are new as there is no file yet!")
+			return
+		}
+		fmt.Println("Error reading branch file.", err)
+		return
+	}
+	fmt.Println(b)
 }
